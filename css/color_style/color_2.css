@@ -1,0 +1,76 @@
+.text-color,
+#header-navigation .link-text::before,
+.option-set a:before,
+.dark-layout h2,
+.dark-layout h3,
+.dark-layout h4
+{
+	color: #e89d80;
+}
+
+
+.bg-color,
+.block-item:hover,
+.event-item:hover .block-item,
+#event_btn_load_more:hover,
+#portfolio .btn_load_more:hover,
+.portfolio-item:hover .portfolio-item-caption:before,
+.portfolio-item.toggle-current .portfolio-item-caption:before,
+input[type="submit"]:hover,
+#menu_link:hover span,
+#menu_link.active span
+{
+	background-color: #e89d80;
+}
+
+
+input[type="text"]:focus, textarea:focus,
+#copyright
+{
+	border-color: #e89d80;
+}
+
+#social-btn-wrap span { background-position: -49px 0; }
+
+#logo { background-image: url(../../images/icons/logo2.png); }
+
+.event-item[data-img-position="right"]:hover .event-description:after { border-left-color: #e89d80; }
+.event-item[data-img-position="left"]:hover .event-description:after { border-right-color: #e89d80; }
+.event-item[data-img-position="top"]:hover .event-description:after { border-bottom-color: #e89d80; }
+
+#to-top-bg { background-position: -53px 0; }
+
+.dark-layout h2.with-border:before,
+.dark-layout h3.with-border:before,
+.dark-layout h4.with-border:before
+{ background: #e89d80; }
+
+@media only screen and (max-width:979px), screen and (max-device-width:979px) {
+	[data-sizey="2"][data-sizex="3"][data-img-position="right"] .event-description:after,
+	[data-sizey="2"][data-sizex="3"][data-img-position="left"] .event-description:after
+	{ border-left-color: transparent; }
+
+
+	.event-item[data-sizey="2"][data-sizex="3"][data-img-position="right"]:hover .event-description:after,
+	.event-item[data-sizey="2"][data-sizex="3"][data-img-position="left"]:hover .event-description:after
+	{ border-bottom-color: #e89d80; }
+}
+
+@media only screen and (max-width: 480px) , screen and (max-device-width: 480px) {
+	.event-item:hover .event-description:after
+	{
+		border-bottom-color: #e89d80;
+	}
+}
+
+::-moz-selection
+{
+    color: #ffffff;
+    background: #e89d80;
+}
+
+::selection
+{
+    color: #ffffff;
+    background: #e89d80;
+}

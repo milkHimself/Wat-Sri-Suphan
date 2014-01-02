@@ -1,0 +1,718 @@
+<!DOCTYPE HTML>
+
+<?php
+
+	include_once('/admin/class/picture.php');
+	include_once('/admin/class/history.php');
+	include_once('/admin/class/touristattractionlist.php');
+	include_once('/admin/class/newslist.php');
+	include_once('/admin/class/guestserviceimpl.php');
+	include_once('/admin/class/gallery.php');
+	
+	if(isset($_POST['Submit'])){
+	
+		$obj = new guestServiceImpl();
+		$obj->subscribe($_POST['Email']);
+	
+	}
+	
+	$MAX_CHAR_LIMIT = 75;
+	
+
+?>
+
+
+
+
+<html>
+
+    <head>
+        <title>Wat Sri Suphan</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="images/temple.ico">
+        <link rel="stylesheet" href="css/common.css" type="text/css">
+        <link rel="stylesheet" href="css/responsive.css" type="text/css">
+		<link rel="stylesheet" href="css/searchbox.css" type="text/css">
+
+        <!-- / color -->
+        <link class="colors_style" href="css/color_style/color_1.css" rel="stylesheet" type="text/css"/>
+
+        <!-- / settings_box -->
+        <link rel="stylesheet" href="settings_box/settings_box.css" type="text/css">
+
+        <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="js/device.min.js"></script>
+        <script type="text/javascript" src="js/SmoothScroll.js"></script>
+
+		
+		<style>
+
+
+
+</style>
+
+        <!--[if lt IE 9]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>        
+
+        <header>
+            <section  class="container">
+                <a href="javascript:void(0);" id="menu_link">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+
+                <nav role="navigation">
+                    <ul id="header-navigation" class="navigation">
+                        <li>
+                            <a class="current" href="#top">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="home">home</span>
+                                </span>
+
+                                <span class="description">you are here</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#history">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="History">History</span>
+                                </span>
+
+                                <span class="description">cool story</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#attractions">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="Attractions">Attractions</span>
+                                </span>
+
+                                <span class="description">what're they doing</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#news">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="News">News</span>
+                                </span>
+
+                                <span class="description">what's news</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#gallery">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="Gallery">Gallery</span>
+                                </span>
+
+                                <span class="description">show me the pictures</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#map">
+                                <span class="link-innner">
+                                    <span class="link-text" data-hover="Map">Map</span>
+                                </span>
+
+                                <span class="description">where is it</span>
+                            </a>
+                        </li>
+						
+						<li>
+							
+								<span class="link-innner">
+									<form id="searchbox" action="./search.html" method="GET">
+										<input type="text" name="q" value="search" style="display: inline-block; font-family: 'PT Serif', serif; color: #505050;" onFocus="if (this.value == 'search') this.value = '';" onBlur="if (this.value == '') this.value = 'search';">                               
+									</form>
+								</span>
+								<span class="description">what's inside this web</span>
+                        </li>
+						
+                    </ul>
+                </nav>
+            </section>
+        </header>
+		
+        <div id="top-slider" class="nav-waypoint">
+            <section id="top" role="banner">
+                <div id="slider-wrapper"></div>
+
+
+                <div id="prewiev">
+                    <div id="logo-wrap">
+                        <div id="logo"></div>
+                    </div>
+
+                    <div id="social-btn-wrap">
+						
+						<a href="javascript:void(0);">
+                            <span class="first icon-facebook"></span>
+                            <span class="second icon-facebook text-color"></span>
+                        </a>
+					
+					
+                        <a href="javascript:void(0);">
+                            <span class="first icon-twitter"></span>
+                            <span class="text-color second icon-twitter"></span>
+                        </a>
+
+                                           
+
+                        <a href="javascript:void(0);">
+                            <span class="first icon-gplus"></span>
+                            <span class="second icon-gplus text-color"></span>
+                        </a>
+                      
+                    </div>
+
+                    <a class="down_btn" href="#history">
+                        scroll
+                        <i class="icon-down-open-big"></i>
+                    </a>
+                </div>
+            </section>
+        </div>
+
+        <div class="nav-waypoint">
+            <section id="history" class="page-section">
+                <div class="heading-title">
+                    <h2 class="with-border border-center opacity-box">History of Wat Sri Suphan</h2>
+                </div>	
+				
+                <div class="container">
+                    <div class="row">
+                        <div id="parallax" class="span12 parallax-viewport opacity-box">
+                            <div class="parallax-layer">
+                                <img src="images/fotos/3.jpg" alt="img">
+                            </div>
+
+                            <div id="author-info">
+                                <p>Let travel back through a half century ago, In Lanna dynasty...</p>
+                            </div>
+                        </div>
+						
+						<?php 
+						
+							$history = new History;
+							echo $history->getHistoryContent();
+						
+						?>
+						
+                        <!--
+						<div class="span6 block-text opacity-box">
+                            <p class="opacity-box">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et nibh luctus, tincidunt ante non, ultricies ante. Donec tincidunt dolor a pharetra congue. Sed ultrices libero ac ante blandit, et porttitor massa feugiat.
+                            </p>
+
+                            <p class="opacity-box">
+                                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla bibendum massa eget pellentesque placerat. Mauris aliquam posuere enim vitae rutrum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                            </p>
+                        </div>
+
+                        <div class="span6 block-text opacity-box">
+                            <p class="opacity-box">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et nibh luctus, tincidunt ante non, ultricies ante. Donec tincidunt dolor a pharetra congue. Sed ultrices libero ac ante blandit, et porttitor massa feugiat.
+                            </p>
+
+                            <p class="opacity-box">
+                                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla bibendum massa eget pellentesque placerat. Mauris aliquam posuere enim vitae rutrum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. 
+                            </p>
+                        </div>
+						-->
+
+                        
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="nav-waypoint">
+            <section id="attractions" data-type="background" data-speed="20">
+                <div id="services-inner" class="page-section">
+                    <div class="container">
+                        <div class="heading-title heading-title-white">
+                            <h2 class="with-border border-center opacity-box">Tourist Attractions</h2>
+
+                            <p class="caption opacity-box">The favorite places, that we recommended you to see.</p>
+                        </div>
+
+                        <div class="services-block row">
+                           
+									<?php
+									
+										$ta = new TouristAttractionList;
+										$talist = $ta->getTouristAttractionList();
+										
+										
+										
+										for($i = 0; $i < count($talist['ID']); $i++){
+										
+										$t = new TouristAttraction;
+										$t = $ta->getTouristAttractionByID($talist['ID'][$i]);
+										
+										
+										
+										if (strlen($t->getContent()) > $MAX_CHAR_LIMIT){
+										$content = substr($t->getContent(), 0, $MAX_CHAR_LIMIT) . '...';}
+										else{
+										$content = $t->getContent();
+										}
+										
+										echo '<div class="span4 servisec-item-wrap">
+                                <div class="servisec-item block-item opacity-box">
+                                    <div class="servisec-preview">
+                                        <div class="servisec-preview-inner">
+										<img src="data:image/jpeg;base64,' . base64_encode($t->getThumbnailPic()->getPicture()) . '" alt="img">
+										</div>
+                                    </div>
+									<div class="opacity-box">
+                                        <h4 class="with-border border-left">'.$t->getTitle().'</h4>
+										<p>'.$content.'</p>
+										<div class="btn-more-wrap">
+                                            <a href="./content.html?content=1&id='.$t->getID().'">
+                                                <i class="icon-eye-1"></i>
+                                                learn more
+                                            </a>
+                                        </div>
+                                    </div>
+								</div>
+                            </div>';
+							
+						
+										
+										}
+									
+									
+									?>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="nav-waypoint">
+            <section id="news" class="page-section">
+                <div class="container">
+                    <div class="heading-title">
+                        <h2 class="with-border border-center opacity-box">News</h2>
+                        <p class="caption opacity-box">Our Lastest Promotion and Festival, Just for You.</p>						
+						<div class="caption2 opacity-box" style="padding-top:10px;padding-bottom:10px;">							
+							<form method="POST">
+								<input type="text" name="Email" value="Subscribe for News? Insert your Email here." onFocus="if (this.value == 'Email') this.value = '';" onBlur="if (this.value == '') this.value = 'Email';" style="color:black;background-color:#EAEAE8;"/>
+								<input type="submit" name="Submit" value="Subscribe" />
+							</form>
+						</div>						
+                    </div>
+					
+                    <div id="events-block" class="projects" >	
+					
+						<?php
+								
+							$newslist = new NewsList;
+							$list = $newslist->getNewsList();
+							
+							for($i=0;$i<count($list['ID']);$i++){
+							
+								$n = new News;
+								$n = $newslist->getNewsByID($list['ID'][$i]);
+								//echo $n->getTitle();
+
+								echo'<article class="event-item element opacity-box" data-sizey="'.$n->getHeight().'" data-sizex="'.$n->getWidth().'"';
+								if($n->getPicPosition()=="1"){ echo'data-img-position="top">';}
+								if($n->getPicPosition()=="2"){ echo'data-img-position="left">';}
+								if($n->getPicPosition()=="3"){ echo'data-img-position="right">';}
+								echo'<div class="events-img" style="background-image: url(data:image/jpeg;base64,' . base64_encode($n->getPicture()->getPicture()) . ')"></div>';
+								echo'<div class="event-description block-item">';
+								echo'<h3 class="with-border border-left">'.$n->getTitle().'</h3>';								
+								echo'<p>'.$n->getContent().'</p><div class="btn-more-wrap">
+											<a href="./content.html?content=2&id='.$n->getID().'"><i class="icon-eye-1"></i>Learn  more</a>
+										</div>
+									</div>
+								</article>';
+							}
+									
+						?>
+						
+                    </div>
+
+                    
+                </div>
+            </section>
+        </div>
+
+        <div class="nav-waypoint">
+            <section id="gallery" class="page-section">
+                <div class="heading-title">
+                    <h2 class="with-border border-center opacity-box">gallery</h2>
+                    
+                </div>
+
+                <div id="portfolio-block">
+                    <section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">The Main Hall</h3>
+                                <p>
+                                    Nullam vulputate a lacus at pretium. Sed porta nunc sit amet eros sollicitudin ullamcorper. Sed venenatis, orci id placerat ullamcorper, elit felis convallis lacus, et dapibus lectus justo ut odio. Integer scelerisque sodales scelerisque. Nulla et mi at sapien lobortis vehicula. Suspendisse
+                                </p>
+                            </div>
+                        </article>
+
+                        <div class="hidden">
+                            <div class="projects portfolio-projects-block">
+							
+								<?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("1");
+																							
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+                               
+                            </div>
+                            
+                        </div>
+                    </section>
+
+                    <section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">Sliver Chapel</h3>
+
+                                <p>
+                                    Nullam vulputate a lacus at pretium. Sed porta nunc sit amet eros sollicitudin ullamcorper. Sed venenatis, orci id placerat ullamcorper, elit felis convallis lacus, et dapibus lectus justo ut odio. Integer scelerisque sodales scelerisque. Nulla et mi at sapien lobortis vehicula. Suspendisse
+                                </p>
+                            </div>
+                        </article>
+
+                        <div class="hidden">
+
+                            <?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("2");
+																							
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+
+                            
+                        </div>
+                    </section>
+
+                    <section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">The Pagoda</h3>
+
+                                <p>
+                                    Nullam vulputate a lacus at pretium. Sed porta nunc sit amet eros sollicitudin ullamcorper. Sed venenatis, orci id placerat ullamcorper, elit felis convallis lacus, et dapibus lectus justo ut odio. Integer scelerisque sodales scelerisque. Nulla et mi at sapien lobortis vehicula. Suspendisse
+                                </p>
+                            </div>
+                        </article>
+
+                        <div class="hidden">
+                           <?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("3");
+																							
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+
+                           
+                        </div>
+                    </section>
+
+                    <section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">The Art Fair</h3>
+                                <p>
+                                    Nullam vulputate a lacus at pretium. Sed porta nunc sit amet eros sollicitudin ullamcorper. Sed venenatis, orci id placerat ullamcorper, elit felis convallis lacus, et dapibus lectus justo ut odio. Integer scelerisque sodales scelerisque. Nulla et mi at sapien lobortis vehicula. Suspendisse
+                                </p>
+                            </div>
+                        </article>
+                        <div class="hidden">
+							<?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("4");
+								
+																							
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+
+                            
+                        </div>
+                    </section>
+
+                    <section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">Ancient Lanna Learning Center</h3>
+
+                                <p>
+                                    Nullam vulputate a lacus at pretium. Sed porta nunc sit amet eros sollicitudin ullamcorper. Sed venenatis, orci id placerat ullamcorper, elit felis convallis lacus, et dapibus lectus justo ut odio. Integer scelerisque sodales scelerisque. Nulla et mi at sapien lobortis vehicula. Suspendisse
+                                </p>
+                            </div>
+                        </article>
+
+                        <div class="hidden">
+							<?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("5");
+																							
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+                            
+                        </div>
+                    </section>
+					
+					<section class="portfolio-item-outer isotope-container opacity-box">
+                        <article class="portfolio-item toggle">
+                            <div class="portfolio-item-caption">
+                                <h3 class="with-border">Others</h3>
+                                <p>
+                                    Miscellaneous pictures that related to Wat Sri Suphan.
+                                </p>
+                            </div>
+                        </article>
+                        <div class="hidden">
+							<?php 
+								
+								$g = new Gallery;
+								$glist = $g->getGalleryItemListBySection("6");
+								
+								for($i = 0; $i < count($glist['ID']); $i++){
+								
+								$tmpPic = new Picture;
+								$tmpPic->getPropsByID($glist['PictureID'][$i]);
+								
+								echo '<article class="portfolio-projects-item element">
+																<figure><img src="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" alt="img"></figure>
+
+																<div class="portfolio-projects-caption bg-color">
+																	<a class="portfolio-projects-zoom icon-search text-color" href="data:image/jpeg;base64,' . base64_encode($tmpPic->getPicture()) . '" rel="prettyPhoto[portfolio1]"></a>
+																	<span class="title-caption">'.$glist['Name'][$i].'</span>
+
+																	<p class="text-caption">'.$glist['Description'][$i].'</p>
+																</div>
+															</article>';
+															
+								}
+								
+								?>
+
+                            
+                        </div>
+                    </section>
+					
+                </div>
+            </section>
+        </div>
+
+        <div class="nav-waypoint">
+            <section id="map" class="page-section">
+                <div class="heading-title">
+                    <h2 class="with-border border-center opacity-box">Map</h2>
+
+                    <p class="caption opacity-box">Ready to go? This is where you can find Wat Sri Suphan</p>
+                </div>
+
+                <div class="container opacity-box">
+                    <div class="row">
+                        <div class="span9">                         
+							
+							<iframe src="https://mapsengine.google.com/map/embed?mid=zQp0j0YUrK5A.kOtpwekg-xj8" style="float:right;" frameBorder="0" width="640" height="480"></iframe>
+                           
+							
+                        </div>
+
+                        <div class="span3">
+                            <div class="cont-info">
+							
+								<h4 style="font-size: 24px;">Contract</h4>
+								
+								<p>
+                                    <span>Wat Srisuphan 100 Wualai Road,</span>
+									<span>Tambol Haiya, Amphur Muang</span>
+									<span>Chiang Mai, Thailand 50100</span>
+                                </p>
+								
+								<div class="cont-info">
+                                <h4>Phone/Fax</h4>
+
+                                <p>
+                                    <span>+6653 200 332</span>
+                                </p>
+								</div>
+								
+								<div class="cont-info">
+								<h4>Email</h4>
+
+                                <p>
+                                    <a href="mailto:watsrisuphan@windowslive.com">watsrisuphan@windowslive.com</a>
+                                </p>
+								</div>
+								
+                            </div>
+
+                           
+
+                            <div class="cont-info">
+                                <h4>For information</br>(Co-ordinator)</h4>
+
+                                <p>									
+                                    <span>Mrs.Yuphin Krengkrud</span>
+                                    <span>+6686 117 0748</span>
+                                </p>
+                            </div>
+							
+							<div class="cont-info">
+								<h4 style="font-size: 22px;">Credit</h4>
+									<h4>Team Member </h4>
+									<p>
+										<span><b>Kanapod Saenkasemsakul</b>&nbsp;&nbsp;ID:542115011</span>									
+										<span><b>Pichet Potha</b>&nbsp;&nbsp;ID:542115041</span>
+										<span><b>Sittipong Borripan</b>&nbsp;&nbsp;ID:542115066</span>										
+										<span><b>Suwichak Fungprasertkul</b>&nbsp;&nbsp;ID:542115069</span>
+										<span><b>Unyamanee Gedjaroen</b>&nbsp;&nbsp;ID:542115072</span>
+										<span><b>Yuke Chen</b>&nbsp;&nbsp;ID:542115511</span>
+									</p>								
+									
+							</div>
+							
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <div class="container">
+                <a id="to-top" class="text-color" href="#">
+                    <span id="to-top-bg" class="icon-up-open-big">
+                    </span>
+
+                    Back to top
+                </a>
+
+                <p id="copyright">
+                    SE2013, "Software Camp Course Project" College of Media Art and Technology, Chiang Mai University, Thailand | Template by Jason Jordan "JJ" &copy; 2020
+                </p>
+            </div>
+        </footer>
+
+        <script type="text/javascript" src="js/jquery.isotope.min.js"></script>
+        <script type="text/javascript" src="js/sorting.js"></script>
+
+        <script type="text/javascript" src="js/jquery.main.js"></script>
+        <script type="text/javascript" src="js/mb.bgndGallery.js"></script>
+        <script type="text/javascript" src="js/jquery.parallax.js"></script>
+        <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+        <script type="text/javascript" src="js/waypoints.min.js"></script>
+        <script type="text/javascript" src="js/jquery.easypiechart.min.js"></script>
+
+        <script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
+        <script type="text/javascript" src="js/jquery.easing.js"></script>
+
+        <script type="text/javascript" src="settings_box/settings_box.js"></script>
+    </body>
+</html>

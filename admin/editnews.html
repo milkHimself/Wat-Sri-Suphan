@@ -1,0 +1,354 @@
+<?php session_start();
+
+	include_once('class/picture.php');
+	include_once('class/newslist.php');
+	include_once('class/news.php');
+	
+	
+	if(isset($_SESSION['AdminID'])){
+	
+		if(isset($_POST['Submit'])){
+		
+				if(is_uploaded_file($_FILES['Picture']['tmp_name'])){
+				
+					
+				
+					if(isset($_POST['PicID'])){
+											
+						$picture = new Picture;
+						$picture->getPropsByID($_POST['PicID']);	
+						$picture->setProps(getimagesize($_FILES['Picture']['tmp_name'])['mime'],getimagesize($_FILES['Picture']['tmp_name'])['3'],addslashes (file_get_contents($_FILES['Picture']['tmp_name'])));
+						$picture->saveToDB();
+					}			
+			
+				}
+				
+				if((isset($_POST['Title']))&&(isset($_POST['Content']))){
+				
+					$Title;
+					$Content;
+				
+					if (strpos($_POST['Title'],'\'') !== false) {
+						$Title = str_replace("'","\'",$_POST['Title']);
+					}else{
+						$Title = $_POST['Title'] ;			
+					}
+					
+					if (strpos($_POST['Content'],'\'') !== false) {
+						$Content = str_replace("'","\'",$_POST['Content']); ;
+					}else{
+						$Content = $_POST['Content'] ;			
+					}
+
+					$news = new News;
+								
+					$news->setID($_POST['NewsID']);
+					$news->setProps($Title,$Content,"0",$_POST['PicPos'],$_POST['Width'],$_POST['Height']);				
+					$news->saveToDB($_SESSION['AdminID']);
+					
+					//Send Email Part
+					if(isset($_POST['sendEmail'])){
+										
+						$link = "http://".$_SERVER['HTTP_HOST'];
+						$e = new EmailSubscription;
+						$e_title = "Updated Wat Sri Suphan News: ".$_POST['Title'];
+						$e_body = $_POST['Content']."\n\r For more info, Visit: ".$link;
+						$e->sendToSubscriber($e_title,$e_body);
+					
+					}
+				
+				}
+				
+		}		
+		
+		if(isset($_GET['id'])){
+					
+			$newslist = new NewsList;
+			$news = $newslist->getNewsByID($_GET['id']);			
+			
+			echo '
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="utf-8">
+				<title>Wat Sri Suphan Administrator Tools</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+				<!-- Loading Bootstrap -->
+				<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+				<!-- Loading Stylesheets -->    
+				<link href="css/archon.css" rel="stylesheet">
+				<link href="css/responsive.css" rel="stylesheet">
+				<link href="css/bootstrap-editable.css" rel="stylesheet">
+				<link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+				<!-- Loading Custom Stylesheets -->    
+				<link href="css/custom.css" rel="stylesheet">
+
+				<link rel="shortcut icon" href="images/favicon.ico">
+
+				<!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+				<!--[if lt IE 9]>
+				<script src="js/html5shiv.js"></script>
+				<![endif]-->
+			</head>
+			<body>
+				<div class="frame">
+					<div class="sidebar">
+						<div class="wrapper">
+
+							<!-- Replace the src of the image with your logo -->
+							<a href="index.html" class="logo"><img src="images/logo.png" alt="Archon Admin" /></a>
+							<ul class="nav  nav-list">					
+
+								<!-- Sidebar header @add class nav-header for sidebar header -->
+								
+								<li><a href="index.html"><i class="icon-home"></i>Dashboard </a></li>
+								<li class="nav-header">Pages</li>
+								<li><a href="history.html"><i class="icon-info-sign"></i>History of Wat Sri Suphan</a></li>							
+								<li>
+									<a class="dropdown" href="#"><i class="icon-bullhorn"></i> News</a>
+									<ul>
+										<li><a href="createnews.html"><i class="icon-plus"></i> Create News</a></li>
+										<li class="active"><a href="newstable.html"><i class="icon-edit"></i> Edit News</a></li>
+									</ul>	
+								</li>
+								<li>
+									<a class="dropdown" href="#"><i class="icon-camera-retro"></i> Tourist Attraction</a>
+									<ul>
+										<li><a href="createattraction.html"><i class="icon-plus"></i> Create new Attraction</a></li>
+										<li><a href="attractiontable.html"><i class="icon-edit"></i> Edit Attraction</a></li>
+									</ul>	
+								</li>
+								<li>
+									<a class="dropdown" href="#"><i class="icon-picture"></i> Gallery</a>
+									<ul>
+										<li><a href="addimage.html"><i class="icon-plus"></i> Add new Image</a></li>
+										<li><a href="imagelist.html"><i class="icon-edit"></i> Edit Gallery</a></li>
+									</ul>	
+								</li>
+
+								<!-- Sidebar header @add class nav-header for sidebar header -->
+								<li class="nav-header">Email</li>
+								<li><a href="subscriptionlist.html"><i class="icon-envelope"></i> Subscription List </a></li>				
+
+								<li class="nav-header">Preview</li>
+								<li><a href="../index.html"><i class="icon-desktop"></i> Back to the website </a></li>
+								
+								
+							</ul>
+
+						</div><!-- /Wrapper -->
+					</div><!-- /Sidebar -->
+
+					<!-- Main content starts here-->
+					<div class="content">			
+
+						<div id="main-content">
+							<div class="row">
+								<div class="col-mod-12">
+									<ul class="breadcrumb">
+										<li><a href="index.html">Admin</a></li>
+										<li><a href="#">News</a></li>
+										<li><a href="#">Edit News</a></li>
+										<li class="active">'.$news->getTitle().'</li>
+									</ul>	
+									
+									<div class="row">
+								
+								<!-- Markdown editor -->
+								<div class="col-md-12">
+									<div class="panel panel-archon">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												'.$news->getTitle().'
+												<span class="pull-right">
+													<a  href="#" class="panel-minimize"><i class="icon-chevron-up"></i></a>
+												</span>
+											</h3>
+										</div>
+										<div class="panel-body">
+											<form class="form-vertical" role="form" enctype="multipart/form-data" method="post">
+												<div class="form-group">
+														<label for="inputEmail1" class="col-md-12 control-label">Title</label>
+														<div class="col-md-12">
+															<textarea class="form-control" name="Title" rows="1" placeholder="News Title">'.$news->getTitle().'</textarea>
+															<input type="hidden" name="NewsID" value="'.$_GET['id'].'"/>
+														</div>
+												</div>		
+												<div class="form-group">
+													<label class="col-md-12 control-label">Content</label>
+													<div class="col-md-12">
+														<textarea class="form-control" name="Content" rows="3" placeholder="News Content">'.$news->getContent().'</textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-md-12 control-label">Featured Picture</label>
+													<input type="hidden" name="PicID" value="'.$news->getPicture()->getID().'" />
+													<img src="data:image/jpeg;base64,' . base64_encode($news->getPicture()->getPicture()) . '" style="margin-left: 18px;">
+													<input class="col-md-12" type="file" name="Picture" id="exampleInputFile">
+												</div>
+												<div class="form-group">
+													<label class="col-md-12 control-label">Featured Picture position on Home Page</label>
+													<div class="col-md-12">
+														<div class="radio">
+															<label>
+																<input type="radio" name="PicPos" id="optionsRadios1" value="1" '; if($news->getPicPosition()=="1"){echo'checked';} echo'>
+																Top
+															</label>
+														</div>
+														<div class="radio">
+															<label>
+																<input type="radio" name="PicPos" id="optionsRadios2" value="2" '; if($news->getPicPosition()=="2"){echo'checked';} echo'>
+																Left
+															</label>
+															
+														</div>
+														<div class="radio">
+															<label>
+																<input type="radio" name="PicPos" id="optionsRadios3" value="3" '; if($news->getPicPosition()=="3"){echo'checked';} echo'>
+																Right
+															</label>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputEmail1" class="col-lg-2 control-label">Block Size</label>												
+													<div class="form-group">
+													<label for="inputEmail1" class="col-lg-1 control-label">Width</label>
+														<div class="col-lg-1">
+															<select name="Width" class="form-control">
+																<option value="1" ';if($news->getWidth()==1){echo "selected";}echo'>1</option>
+																<option value="2" ';if($news->getWidth()==2){echo "selected";}echo'>2</option>
+																<option value="3" ';if($news->getWidth()==3){echo "selected";}echo'>3</option>
+																<option value="4" ';if($news->getWidth()==4){echo "selected";}echo'>4</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-group">
+													<label for="inputEmail1" class="col-lg-1 control-label">Height</label>
+														<div class="col-lg-1">
+															<select name="Height" class="form-control">
+																<option value="1" ';if($news->getHeight()==1){echo "selected";}echo'>1</option>
+																<option value="2" ';if($news->getHeight()==2){echo "selected";}echo'>2</option>
+																<option value="3" ';if($news->getHeight()==3){echo "selected";}echo'>3</option>
+																<option value="4" ';if($news->getHeight()==4){echo "selected";}echo'>4</option>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">			
+													<label class="col-md-12 control-label">Email Subscription</label>
+													<div class="col-md-12">
+														<div class="checkbox">
+															<label>
+																<input type="checkbox" name="sendEmail" value="true">
+																Send an Update to Subscriber
+															</label>
+														</div>											
+													</div>
+												</div>
+												<button type="submit" class="btn btn-primary" name="Submit" style="margin-left: 18px;">Save</button>									
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+									
+								</div>
+							</div>
+
+							
+
+							<!-- Modal -->
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+											<h5 class="modal-title">Panel Settings</h5>
+											<span class="small">Some sort of settings with a form</span>
+										</div>
+										<div class="modal-body">
+											<form class="form-horizontal" role="form">
+												<div class="form-group">
+													<label for="inputEmail1" class="col-lg-2 control-label">Label</label>
+													<div class="col-lg-10">
+														<input type="email" class="form-control" id="inputEmail1" placeholder="Label">
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputPassword1" class="col-lg-2 control-label">Second Label</label>
+													<div class="col-lg-10">
+														<input type="text" class="form-control" id="inputPassword1" placeholder="Label two">
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											<button type="button" class="btn btn-primary">Save changes</button>
+										</div>
+									</div><!-- /.modal-content -->
+								</div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+
+						</div><!-- /Main Content  @7 -->
+
+					</div><!-- / Content @5 -->
+
+					<div class="row footer">
+						<div class="col-md-12 text-center">
+							SE2013, "Software Camp Course Project" College of Media Art and Technology, Chiang Mai University, Thailand | Template by Bootstrap Guru "Archon" © 2013
+						</div>
+					</div>
+				</div> <!-- Frame -->
+
+
+				<!-- Load JS here for greater good =============================-->
+				<script src="js/jquery-1.8.3.min.js"></script>
+				<script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+				<script src="js/jquery.ui.touch-punch.min.js"></script>
+				<script src="js/bootstrap.min.js"></script>
+				<script src="js/bootstrap-select.js"></script>
+				<script src="js/bootstrap-switch.js"></script>
+				<script src="js/flatui-checkbox.js"></script>
+				<script src="js/flatui-radio.js"></script>
+				<script src="js/jquery.tagsinput.js"></script>
+				<script src="js/jquery.placeholder.js"></script>
+				<script src="js/bootstrap-typeahead.js"></script>
+				<script src="js/application.js"></script>
+				<script src="js/moment.min.js"></script>
+				<script src="js/jquery.dataTables.min.js"></script>
+				<script src="js/jquery.sortable.js"></script>
+				<script type="text/javascript" src="js/jquery.gritter.js"></script>
+
+
+				<!-- Page scripts-->
+				<script type="text/javascript" src="js/bootstrap-editable.min.js"></script>
+				<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+				<script type="text/javascript" src="js/bootstrap-editable-custom.js"></script>
+				<script src="js/jquery.autosize.min.js"></script>
+				<script src="js/jquery.hotkeys.min.js" ></script>
+				<script src="js/bootstrap-colorpicker.js"></script>
+				<script src="js/bootstrap-wysiwyg.js"></script>
+				<script src="js/bootstrap-markdown.js"></script>
+				<script src="js/forms.js"></script>
+
+				<!-- Archon JS =============================-->
+				<script src="js/archon.js"></script>
+			</body>
+			</html>
+		';
+		
+		
+		}
+	
+	}else{
+	
+		header('Location: login.html');
+	
+	}
+
+?>

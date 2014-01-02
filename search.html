@@ -1,0 +1,272 @@
+<?php
+
+	include_once('/admin/class/searchresult.php');
+	
+	
+
+	if(isset($_GET['q'])){
+	$keyword = $_GET['q'];
+	
+	$s = new SearchResult;
+	$list = $s->searchFromKeyword($keyword);
+	
+	echo "<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <title>Search Result</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+        <link rel='shortcut icon' href='images/temple.ico'>
+        <link rel='stylesheet' href='css/common.css' type='text/css'>
+        <link rel='stylesheet' href='css/responsive.css' type='text/css'>
+		<link rel='stylesheet' href='css/searchbox.css' type='text/css'>
+
+        <!-- / color -->
+        <link class='colors_style' href='css/color_style/color_1.css' rel='stylesheet' type='text/css'/>
+
+        <!-- / settings_box -->
+        <link rel='stylesheet' href='settings_box/settings_box.css' type='text/css'>
+
+        <script type='text/javascript' src='js/jquery-1.8.2.min.js'></script>
+        <script type='text/javascript' src='js/device.min.js'></script>
+
+		
+		<style>
+
+
+
+</style>
+
+        <!--[if lt IE 9]>
+            <script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script>
+        <![endif]-->
+    </head>
+
+    <body>        
+
+        <header>
+            <section  class='container'>
+                <a href='javascript:void(0);' id='menu_link'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+
+                <nav role='navigation'>
+                    <ul id='header-navigation' class='navigation'>
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='home'>home</span>
+                                </span>
+
+                                <span class='description'>you are here</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='History'>History</span>
+                                </span>
+
+                                <span class='description'>cool story</span>
+                            </a>
+                        </li>
+						
+					
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Attractions'>Attractions</span>
+                                </span>
+
+                                <span class='description'>what're they doing</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='News'>News</span>
+                                </span>
+
+                                <span class='description'>what's news</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Gallery'>Gallery</span>
+                                </span>
+
+                                <span class='description'>show me the pictures</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Map'>Map</span>
+                                </span>
+
+                                <span class='description'>where is it</span>
+                            </a>
+                        </li>
+						
+						<li>
+							
+								<span class='link-innner'>
+									<form id='searchbox' action='./search.html' method='GET'>
+										<input type='text' name='q' value='search' style='display: inline-block; font-family: 'PT Serif', serif; color: #505050;' onFocus='if (this.value == 'search') this.value = '';' onBlur='if (this.value == '') this.value = 'search';'>                               
+									</form>
+								</span>
+								<span class='description'>what's inside this web</span>
+                        </li>
+						
+                    </ul>
+                </nav>
+            </section>
+        </header>
+		
+		
+		<div>
+            <section id='attractions-header'>
+                <div id='services-inner' style='padding-top:40px;padding-bottom:40px;'>
+                    <div class='container' >
+                        <div class='heading-title-white'>
+                            <h2 class='with-border border-left' style='font-size:42px;'>Search Result: '".$_GET['q']."' </h2>                           
+                        </div>                        
+                    </div>
+                </div>
+            </section>
+        </div>
+       
+       <div class='nav-waypoint'>
+            <section id='con' style='padding-top: 40px;padding-bottom: 70px;'>             
+
+                <div class='container'>
+				
+                    <div class='row'>
+                        <div class='span9'>"; 
+						
+						for($i = 0; $i < count($list['ID']); $i++){
+						
+						echo"
+							<div>
+								<h2>".$list['Title'][$i]."</h2>		
+								<div class='block-text'>							
+									<p>".$list['Content'][$i]."</p>							
+								</div>
+								
+								<div style='display:block;padding-bottom: 15px;margin-left: 45%;'>
+									<a href='./content.html?content=".$list['Type'][$i]."&id=".$list['ID'][$i]."' style=\"font-size: 12px;	font-family: 'PT Serif', serif; text-transform: uppercase; 	color: #505050;\">Read More</a>
+								</div>
+								
+							</div>
+							";
+							
+							if($i != (count($list['ID'])-1)){
+								echo "<div style='padding-top:10px;padding-bottom:30px;'>
+								<div style='width:75%;border-bottom-style:dotted;border-bottom-width:thin;margin:0 auto;'></div>
+							</div>";
+							}
+						}
+						
+						
+						echo"
+							
+                        </div>
+						
+                        <div class='span3' style='padding-top: 40px;'>
+                            <div class='cont-info'>
+							
+								<h4 style='font-size: 24px;'>Contract</h4>
+								
+								<p>
+                                    <span>Wat Srisuphan 100 Wualai Road,</span>
+									<span>Tambol Haiya, Amphur Muang</span>
+									<span>Chiang Mai, Thailand 50100</span>
+                                </p>
+								
+								<div class='cont-info'>
+                                <h4>Phone/Fax</h4>
+
+                                <p>
+                                    <span>+6653 200 332</span>
+                                </p>
+								</div>
+								
+								<div class='cont-info'>
+								<h4>Email</h4>
+
+                                <p>
+                                    <a href='mailto:watsrisuphan@windowslive.com'>watsrisuphan@windowslive.com</a>
+                                </p>
+								</div>
+								
+                            </div>
+
+                           
+
+                            <div class='cont-info'>
+                                <h4>For information</br>(Co-ordinator)</h4>
+
+                                <p>									
+                                    <span>Mrs.Yuphin Krengkrud</span>
+                                    <span>+6686 117 0748</span>
+                                </p>
+                            </div>			
+							
+							
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+		
+        <footer>
+            <div class='container'>
+                <a id='to-top' class='text-color' href='#'>
+                    <span id='to-top-bg' class='icon-up-open-big'>
+                    </span>
+
+                    Back to top
+                </a>
+
+                <p id='copyright'>
+                    SE2013, 'Software Camp Course Project' College of Media Art and Technology, Chiang Mai University, Thailand | Template by Jason Jordan 'JJ' &copy; 2020
+                </p>
+            </div>
+        </footer>
+
+        <script type='text/javascript' src='js/jquery.isotope.min.js'></script>
+        <script type='text/javascript' src='js/sorting.js'></script>
+
+        <script type='text/javascript' src='js/jquery.main.js'></script>
+        <script type='text/javascript' src='js/mb.bgndGallery.js'></script>
+        <script type='text/javascript' src='js/jquery.parallax.js'></script>
+        <script type='text/javascript' src='js/jquery.scrollTo.min.js'></script>
+        <script type='text/javascript' src='js/waypoints.min.js'></script>
+        <script type='text/javascript' src='js/jquery.easypiechart.min.js'></script>
+
+        <script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
+        <script type='text/javascript' src='js/jquery.easing.js'></script>
+
+        <script type='text/javascript' src='settings_box/settings_box.js'></script>
+    </body>
+</html>";
+
+	}else{
+	
+	
+		header('Location: index.html');
+		
+		
+	}
+	
+?>
+

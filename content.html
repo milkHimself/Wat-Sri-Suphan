@@ -1,0 +1,324 @@
+<?php
+	
+	include_once('/admin/class/touristattractionlist.php');
+	include_once('/admin/class/newslist.php');
+
+	$GET_INFO_FILLED = ((isset($_GET['content']))&&(isset($_GET['id'])));
+
+	if($GET_INFO_FILLED==true){
+		
+		$obj;
+		$title;
+		$content;
+		$picture;
+		
+		$link = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		
+		if($_GET['content']=="1"){
+			
+			$ta = new TouristAttractionList;
+			$obj = $ta->getTouristAttractionByID($_GET['id']);
+			$title = $obj->getTitle();
+			$content = $obj->getContent();
+			$picture = $obj->getFeaturedPic();
+			
+		
+		}else if($_GET['content']=="2"){
+			
+			$n = new NewsList;
+			$obj = $n->getNewsByID($_GET['id']);
+			$title = $obj->getTitle();
+			$content = $obj->getContent();
+			$picture = $obj->getPicture();
+		
+		}
+		
+		$desc;
+			$MAX_CHAR_LIMIT = 75;
+			
+			if ((strlen($content)) > $MAX_CHAR_LIMIT){
+			$desc = substr($content, 0, $MAX_CHAR_LIMIT) . '... | For more info, Visit Wat Sri Suphan Website.';}
+			else{
+			$desc = $content;
+			}
+		
+		echo "
+		<!DOCTYPE HTML>
+<html>
+
+    <head>
+        <title>Wat Sri Suphan</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+        <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+        <link rel='shortcut icon' href='images/temple.ico'>
+        <link rel='stylesheet' href='css/common.css' type='text/css'>
+        <link rel='stylesheet' href='css/responsive.css' type='text/css'>
+		<link rel='stylesheet' href='css/searchbox.css' type='text/css'>
+
+        <!-- / color -->
+        <link class='colors_style' href='css/color_style/color_1.css' rel='stylesheet' type='text/css'/>
+
+        <!-- / settings_box -->
+        <link rel='stylesheet' href='settings_box/settings_box.css' type='text/css'>
+
+        <script type='text/javascript' src='js/jquery-1.8.2.min.js'></script>
+        <script type='text/javascript' src='js/device.min.js'></script>
+
+		
+		<style>
+
+
+
+</style>
+
+        <!--[if lt IE 9]>
+            <script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script>
+        <![endif]-->
+    </head>
+
+    <body>        
+
+        <header>
+            <section  class='container'>
+                <a href='javascript:void(0);' id='menu_link'>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </a>
+
+                <nav role='navigation'>
+                    <ul id='header-navigation' class='navigation'>
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='home'>home</span>
+                                </span>
+
+                                <span class='description'>you are here</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='History'>History</span>
+                                </span>
+
+                                <span class='description'>cool story</span>
+                            </a>
+                        </li>
+						
+					
+
+                        <li>
+                            <a ";							
+							if($_GET['content']=="1"){
+							echo " style='color: #a8a175;'";
+							}else{
+							echo " href='index.html'";
+							}
+							echo">
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Attractions'>Attractions</span>
+                                </span>
+
+                                <span class='description'>what're they doing</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a ";							
+							if($_GET['content']=="2"){
+							echo "style='color: #a8a175;'";
+							}else{
+							echo "href='index.html'";
+							}
+							echo">
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='News'>News</span>
+                                </span>
+
+                                <span class='description'>what's news</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Gallery'>Gallery</span>
+                                </span>
+
+                                <span class='description'>show me the pictures</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href='index.html'>
+                                <span class='link-innner'>
+                                    <span class='link-text' data-hover='Map'>Map</span>
+                                </span>
+
+                                <span class='description'>where is it</span>
+                            </a>
+                        </li>
+						
+						<li>
+							
+								<span class='link-innner'>
+									<form id='searchbox' action='./search.html' method='GET'>
+										<input type='text' name='q' value='search' style='display: inline-block; font-family: 'PT Serif', serif; color: #505050;' onFocus='if (this.value == 'search') this.value = '';' onBlur='if (this.value == '') this.value = 'search';'>                               
+									</form>
+								</span>
+								<span class='description'>what's inside this web</span>
+                        </li>
+						
+                    </ul>
+                </nav>
+            </section>
+        </header>
+		
+		
+		<div>
+            <section id='attractions-header'>
+                <div id='services-inner' style='padding-top:40px;padding-bottom:40px;'>
+                    <div class='container' >
+						<div class='row'>
+							<div class='span9'>
+								<div class='heading-title-white'>
+								
+									<h2 class='with-border border-left' style='font-size:42px;'>".$title."</h2>
+									
+								</div>  
+							</div>
+							<div class='span3'>
+								<div id='social-btn-wrap' style='padding-left:0px;'>
+									<a href='http://www.facebook.com/sharer/sharer.php?s=100&p[url]=".$link."&p[images][0]=&p[title]=Wat Sri Suphan: ".$title."&p[summary]=".$desc."' target='_blank''>									
+										<span class='first icon-facebook'></span>
+										<span class='second icon-facebook text-color'></span>
+									</a>
+									
+									<a href='http://twitter.com/home?status=Wat Sri Suphan: ".$title.", More Info @:".$link."' target='_blank''>
+										<span class='first icon-twitter'></span>
+										<span class='text-color second icon-twitter'></span>
+									</a>
+									
+									<a href='https://plus.google.com/share?url=".$link."' target='_blank''>
+										<span class='first icon-gplus'></span>
+										<span class='second icon-gplus text-color'></span>
+									</a>									
+								</div>
+							</div>
+						</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+       
+       <div class='nav-waypoint'>
+            <section id='con' style='padding-top: 40px;padding-bottom: 70px;'>             
+
+                <div class='container'>
+				
+                    <div class='row'>
+                        <div class='span9'> 
+						
+							<div>								
+														
+								<div style='overflow: hidden; position: relative; margin-bottom: 15px;text-align: center; '>								
+										<img src='data:image/jpeg;base64," . base64_encode($picture->getPicture()) . "' width='500' alt='img'>
+								</div>							
+								<div class='block-text'>							
+									<p>
+										".$content."
+									</p>							
+								</div>
+							</div>							
+							
+							
+							
+                        </div>
+						
+						<div class='span3' >
+							<div class='cont-info'>
+									
+								
+							
+								<h4 style='font-size: 24px;'>Contract</h4>								
+								<p>
+                                    <span>Wat Srisuphan 100 Wualai Road,</span>
+									<span>Tambol Haiya, Amphur Muang</span>
+									<span>Chiang Mai, Thailand 50100</span>
+                                </p>
+								
+								<div class='cont-info'>
+                                <h4>Phone/Fax</h4>
+
+                                <p>
+                                    <span>+6653 200 332</span>
+                                </p>
+								</div>
+								
+								<div class='cont-info'>
+								<h4>Email</h4>
+
+                                <p>
+                                    <a href='mailto:watsrisuphan@windowslive.com'>watsrisuphan@windowslive.com</a>
+                                </p>
+								</div>
+								
+                            </div>
+
+                           
+
+                            <div class='cont-info'>
+                                <h4>For information</br>(Co-ordinator)</h4>
+
+                                <p>									
+                                    <span>Mrs.Yuphin Krengkrud</span>
+                                    <span>+6686 117 0748</span>
+                                </p>
+                            </div>			
+							
+							
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+		
+        <footer>
+            <div class='container'>
+                <a id='to-top' class='text-color' href='#'>
+                    <span id='to-top-bg' class='icon-up-open-big'>
+                    </span>
+
+                    Back to top
+                </a>
+
+                <p id='copyright'>
+                    SE2013, 'Software Camp Course Project' College of Media Art and Technology, Chiang Mai University, Thailand | Template by Jason Jordan 'JJ' &copy; 2020
+                </p>
+            </div>
+        </footer>
+
+        <script type='text/javascript' src='js/jquery.isotope.min.js'></script>
+        <script type='text/javascript' src='js/sorting.js'></script>
+
+        <script type='text/javascript' src='js/jquery.main.js'></script>
+        <script type='text/javascript' src='js/mb.bgndGallery.js'></script>
+        <script type='text/javascript' src='js/jquery.parallax.js'></script>
+        <script type='text/javascript' src='js/jquery.scrollTo.min.js'></script>
+        <script type='text/javascript' src='js/waypoints.min.js'></script>
+        <script type='text/javascript' src='js/jquery.easypiechart.min.js'></script>
+
+        <script type='text/javascript' src='js/jquery.prettyPhoto.js'></script>
+        <script type='text/javascript' src='js/jquery.easing.js'></script>
+
+        <script type='text/javascript' src='settings_box/settings_box.js'></script>
+    </body>
+</html>
+		";
+	
+	}
+
+?>
