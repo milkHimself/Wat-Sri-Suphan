@@ -8,3 +8,5 @@ And add "AddHandler application/x-httpd-php .html" into the file. In order to ma
 
 Any question other than that? You can ask me
 -Milk
+
+ Suck !!
