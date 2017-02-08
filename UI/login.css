@@ -1,0 +1,28 @@
+#left{
+	background-color:#E54848;
+	color:white;
+	padding:0px;
+	width: 30%;
+	height: 100%;
+	opacity: 0.9;
+	
+	
+}
+
+h1,h2{
+	color:white;
+	
+}
+#image{
+	width: 100%;
+	height: 100%;
+	padding: 0px;
+	background-image: url("long_3.jpg");
+	background-size: cover; 
+	opacity: 0.3;
+}
+
+h1,h2{
+	color:white;
+	
+}
